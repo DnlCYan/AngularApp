@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'AngularApp'`, () => {
+  it(`should have a 'Status'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('AngularApp');
+    expect(app.isOnline).toEqual(true);
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('AngularApp app is running!');
+    expect(compiled.querySelector('.container-fluid h1')?.textContent).toContain('Angular Progressive Web Application (PWA)');
   });
 });
