@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "gh-build": "ng build -c production --base-href=/AngularApp/",
-    "gh-deploy": "npx gh-pages -d dist/angular-app"
+    "gh-deploy": "npx gh-pages -d dist/angular-app",
+    "gh-build-deploy": "npm run gh-build && npm run gh-deploy"
   },
   "private": true,
   "dependencies": {
