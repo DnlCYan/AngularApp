@@ -24,17 +24,12 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this.updateOnlineStatus();
 
+    console.info(`platform: ${JSON.stringify(this.platform)}`);
+
     window.addEventListener('online', this.updateOnlineStatus.bind(this));
     window.addEventListener('offline', this.updateOnlineStatus.bind(this));
 
     if (this.swUpdate.isEnabled) { //Must run on production mode to be activated (app.module)
-      this.swUpdate.versionUpdates.pipe(
-        filter((evt: any): evt is VersionReadyEvent => evt.type === 'VERSION_READY'),
-        map((evt: any) => {
-          console.info(`currentVersion=[${evt.currentVersion} | latestVersion=[${evt.latestVersion}]`);
-          this.modalVersion = true;
-        }),
-      );
 
       const updatesAvailable = this.swUpdate.versionUpdates.pipe(
         filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY'),
@@ -44,13 +39,14 @@ export class AppComponent implements OnInit {
           available: evt.latestVersion,
         })));
 
-      updatesAvailable.subscribe(() => {
+      updatesAvailable.subscribe((evt) => {
 
-        console.info('new version');
-        if (confirm("New version available. Load New Version?")) {
-
-          window.location.reload();
-        }
+        console.info(`currentVersion=[${JSON.stringify(evt.current)} | latestVersion=[${JSON.stringify(evt.available)}]`);
+        this.modalVersion = true;
+        // if (confirm("New version available. Load New Version?")) {
+        // 
+        // window.location.reload();
+        // }
       });
     }
   }
