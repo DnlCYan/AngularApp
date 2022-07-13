@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "gh-build": "ng build -c production --base-href=/AngularApp/",
+    "gh-deploy": "npx gh-pages -d dist/angular-appnpm run "
   },
   "private": true,
   "dependencies": {
