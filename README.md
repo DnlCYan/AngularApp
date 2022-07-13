@@ -1,6 +1,30 @@
 # AngularApp
 A basic Angular Application with standard functionalities like PWA, SSR, GA
 
+# PWA - Progressive Web App
+
+Here's a few of the advantages you'll get by converting your Angular application into a progressive web app.
+
+- Insane load-speed performance (when done right).
+- A native-like app that can be accessed via a mobile browser or Google Play Store (and Apple Store if you know how to do it).
+- App store independence.
+- Capable of operating offline (thanks to service workers).
+- The ability to send push notifications via the service worker.
+- Have a custom splash screen (also known as an app shell in Angular)
+- An awesome SEO score - As fast and responsive web page, PWAs have an average SEO score of 85.
+- Smaller file size (Native apps tend to require more data to download then a PWA).
+- Painless updates (the service worker will automatically update the app in the background without requiring the user to do anything).
+
+The largest disadvantage I'm aware of is that the Apple Store policy does not allow developers to deploy their progressive web app as an app.
+
+## Home Screen
+There are a couple of conditions for this to work, one of them being that the application needs to run over HTTPS and have a Service Worker.
+And the manifest.webmanifest must be available (should be automatically configured by PWA installation).
+
+Also, the option for installing to Home Screen will only be shown if certain extra conditions are met.
+There is a constantly evolving heuristic that will determine if the button "Install To Home Screen" will be shown or no to the user, that typically has to do with the number of times that the user visited the site, how often, etc.
+
+
 # Build
 To build the application run (default configuration is production):
 `ng build` or `ng build -c production`
