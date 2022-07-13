@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1657711401832,
+  "timestamp": 1657712132881,
   "index": "/AngularApp/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/AngularApp/favicon.ico",
         "/AngularApp/index.html",
-        "/AngularApp/main.08d7a62a50df4e04.js",
+        "/AngularApp/main.7f8e8fd58c39a1bc.js",
         "/AngularApp/manifest.webmanifest",
         "/AngularApp/polyfills.18c6fe6ac6219aca.js",
         "/AngularApp/runtime.47b4abc39be54617.js",
@@ -57,8 +57,8 @@
     "/AngularApp/bootstrap-icons.04b74c9ca959c717.woff": "d5868949a21b702b784cd43437cf00f35d514e12",
     "/AngularApp/bootstrap-icons.cafbf7170f1f1b17.woff2": "729751b69abdc0dbdd1df847dcaa04fff512d49a",
     "/AngularApp/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/AngularApp/index.html": "f77d64bbd232529472fa738e716615b5e3ba563c",
-    "/AngularApp/main.08d7a62a50df4e04.js": "097efd323fa6befc2d77139766a54b9e986dc759",
+    "/AngularApp/index.html": "c3a491be67807637cf3e0b54a073993ac9a0a3d1",
+    "/AngularApp/main.7f8e8fd58c39a1bc.js": "2218191117a51b5771d812ded5bfbb2c46c2dde9",
     "/AngularApp/manifest.webmanifest": "960b5787761953bead03edeae308e99df54834af",
     "/AngularApp/polyfills.18c6fe6ac6219aca.js": "75fc769bfd439a72c90577a4cdc7f22f431ee286",
     "/AngularApp/runtime.47b4abc39be54617.js": "ff9774879a81e5385dbce8a92ca2bf2cfe5c3b1e",
