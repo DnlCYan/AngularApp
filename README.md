@@ -3,6 +3,9 @@ A basic Angular Application with standard functionalities like PWA, SSR, GA
 
 # PWA - Progressive Web App
 
+To install PWA to existing project
+`ng add @angular/pwa`
+
 Here's a few of the advantages you'll get by converting your Angular application into a progressive web app.
 
 - Insane load-speed performance (when done right).
