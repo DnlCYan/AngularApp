@@ -1,0 +1,87 @@
+{
+  "configVersion": 1,
+  "timestamp": 1657704138549,
+  "index": "/AngularApp/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/AngularApp/favicon.ico",
+        "/AngularApp/index.html",
+        "/AngularApp/main.1af448cdf23f51fe.js",
+        "/AngularApp/manifest.webmanifest",
+        "/AngularApp/polyfills.18c6fe6ac6219aca.js",
+        "/AngularApp/runtime.47b4abc39be54617.js",
+        "/AngularApp/scripts.abbb37f329463b12.js",
+        "/AngularApp/styles.57e0fa67e8237506.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/AngularApp/assets/icons/icon-128x128.png",
+        "/AngularApp/assets/icons/icon-144x144.png",
+        "/AngularApp/assets/icons/icon-152x152.png",
+        "/AngularApp/assets/icons/icon-192x192.png",
+        "/AngularApp/assets/icons/icon-384x384.png",
+        "/AngularApp/assets/icons/icon-512x512.png",
+        "/AngularApp/assets/icons/icon-72x72.png",
+        "/AngularApp/assets/icons/icon-96x96.png",
+        "/AngularApp/bootstrap-icons.04b74c9ca959c717.woff",
+        "/AngularApp/bootstrap-icons.cafbf7170f1f1b17.woff2"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/AngularApp/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "/AngularApp/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "/AngularApp/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "/AngularApp/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "/AngularApp/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "/AngularApp/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "/AngularApp/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "/AngularApp/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/AngularApp/bootstrap-icons.04b74c9ca959c717.woff": "d5868949a21b702b784cd43437cf00f35d514e12",
+    "/AngularApp/bootstrap-icons.cafbf7170f1f1b17.woff2": "729751b69abdc0dbdd1df847dcaa04fff512d49a",
+    "/AngularApp/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
+    "/AngularApp/index.html": "8e639d1989fdd04825475e7b13bdddfa32044c01",
+    "/AngularApp/main.1af448cdf23f51fe.js": "03e31c13cce067e73154fe4178cf8d47b5efaa25",
+    "/AngularApp/manifest.webmanifest": "960b5787761953bead03edeae308e99df54834af",
+    "/AngularApp/polyfills.18c6fe6ac6219aca.js": "75fc769bfd439a72c90577a4cdc7f22f431ee286",
+    "/AngularApp/runtime.47b4abc39be54617.js": "ff9774879a81e5385dbce8a92ca2bf2cfe5c3b1e",
+    "/AngularApp/scripts.abbb37f329463b12.js": "f071c80334dd74cc1a8b8d6044d58933cf76d0af",
+    "/AngularApp/styles.57e0fa67e8237506.css": "a0ece436a6e953a4bcc3b0b83621230ee391c6a8"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
