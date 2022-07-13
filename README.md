@@ -27,6 +27,24 @@ And the manifest.webmanifest must be available (should be automatically configur
 Also, the option for installing to Home Screen will only be shown if certain extra conditions are met.
 There is a constantly evolving heuristic that will determine if the button "Install To Home Screen" will be shown or no to the user, that typically has to do with the number of times that the user visited the site, how often, etc.
 
+# SSR - Server Side Rendering
+
+To install SSR to existing project
+`ng add @nguniversal/express-engine`
+
+This add 3 new angular/cli targets:
+- server 
+- serve-ssr
+- prerender
+
+And 4 new scripts:
+- "dev:ssr": "ng run AngularApp:serve-ssr",
+- "serve:ssr": "node dist/AngularApp/server/main.js",
+- "build:ssr": "ng build && ng run AngularApp:server",
+- "prerender": "ng run AngularApp:prerender"
+
+To run SSR use this command:
+`npm run dev:ssr`
 
 # Build
 To build the application run (default configuration is production):
