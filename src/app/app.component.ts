@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter, map } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
   modalPwaPlatform: string | undefined;
 
   constructor(private platform: Platform,
-    private swUpdate: SwUpdate) {
+    private swUpdate: SwUpdate, @Inject(PLATFORM_ID) private platformId: any) {
     this.isOnline = false;
     this.modalVersion = false;
   }
@@ -26,8 +27,10 @@ export class AppComponent implements OnInit {
 
     console.info(`platform: ${JSON.stringify(this.platform)}`);
 
-    window.addEventListener('online', this.updateOnlineStatus.bind(this));
-    window.addEventListener('offline', this.updateOnlineStatus.bind(this));
+    if (isPlatformBrowser(this.platformId)) {
+      window && window.addEventListener('online', this.updateOnlineStatus.bind(this));
+      window && window.addEventListener('offline', this.updateOnlineStatus.bind(this));
+    }
 
     if (this.swUpdate.isEnabled) { //Must run on production mode to be activated (app.module)
 
@@ -55,13 +58,17 @@ export class AppComponent implements OnInit {
    * VERSION UPDATE
    */
   private updateOnlineStatus(): void {
-    this.isOnline = window.navigator.onLine;
-    console.info(`isOnline=[${this.isOnline}]`);
+    if (isPlatformBrowser(this.platformId)) {
+      this.isOnline = window && window.navigator.onLine;
+      // console.info(`isOnline=[${this.isOnline}]`);
+    }
   }
 
   public updateVersion(): void {
     this.modalVersion = false;
-    window.location.reload();
+    if (isPlatformBrowser(this.platformId)) {
+      window && window.location.reload();
+    }
   }
 
   public closeVersion(): void {
