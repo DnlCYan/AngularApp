@@ -388,83 +388,49 @@ Note 2: gh-pages only support static websites
 
 # Deploy (with SSR)
 Server Side Rendering website needs to run over a node server, so we need more than a simple http server.
-We can still deploy on IIS, but need to configure a web.config file that uses **iisnode** module.
+We can still deploy on IIS, but need to configure a web.config file that uses **iisnode** and **rewrite** module.
 ```
-<!-- 
-     This configuration file is required if iisnode is used to run node processes behind
-     IIS or IIS Express.  For more information, visit:
-
-     https://github.com/tjanczuk/iisnode/blob/master/src/samples/configuration/web.config
--->
-
-
+<?xml version="1.0" encoding="utf-8"?>
 <configuration>
-    <system.webServer>
-        <handlers>
-            <!-- indicates that the app.js file is a node.js application to be handled by the iisnode module -->
-            <add name="iisnode" path="server/server.js" verb="*" modules="iisnode" />
-        </handlers>
-    
-        <rewrite>
-            <rules>
-                <!-- Don't interfere with requests for logs -->
-                <rule name="LogFile" patternSyntax="ECMAScript" stopProcessing="true">
-                    <match url="^[a-zA-Z0-9_\-]+\.js\.logs\/\d+\.txt$" />
-                </rule>
-
-                <!-- Don't interfere with requests for node-inspector debugging -->
-                <rule name="NodeInspector" patternSyntax="ECMAScript" stopProcessing="true">                    
-                    <match url="^server.js\/debug[\/]?" />
-                </rule>
-              
-                <!-- First we consider whether the incoming URL matches a physical file in the /public folder -->
-                <rule name="StaticContent">
-                    <action type="Rewrite" url="public{REQUEST_URI}" />
-                </rule>
-
-                <!-- All other URLs are mapped to the Node.js application entry point -->
-                <rule name="DynamicContent">
-                    <conditions>
-                        <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="True" />
-                    </conditions>
-                    <action type="Rewrite" url="server.js" />
-                </rule>
-            </rules>
-        </rewrite>
-
-        <!-- You can control how Node is hosted within IIS using the following options -->
-        <!--<iisnode      
-          node_env="%node_env%"
-          nodeProcessCommandLine="&quot;%programfiles%\nodejs\node.exe&quot;"
-          nodeProcessCountPerApplication="1"
-          maxConcurrentRequestsPerProcess="1024"
-          maxNamedPipeConnectionRetry="3"
-          namedPipeConnectionRetryDelay="2000"      
-          maxNamedPipeConnectionPoolSize="512"
-          maxNamedPipePooledConnectionAge="30000"
-          asyncCompletionThreadCount="0"
-          initialRequestBufferSize="4096"
-          maxRequestBufferSize="65536"
-          watchedFiles="*.js"
-          uncFileChangesPollingInterval="5000"      
-          gracefulShutdownTimeout="60000"
-          loggingEnabled="true"
-          logDirectoryNameSuffix="logs"
-          debuggingEnabled="true"
-          debuggerPortRange="5058-6058"
-          debuggerPathSegment="debug"
-          maxLogFileSizeInKB="128"
-          appendToExistingLog="false"
-          logFileFlushInterval="5000"
-          devErrorsEnabled="true"
-          flushResponse="false"      
-          enableXFF="false"
-          promoteServerVars=""
-         />-->
-    
-    </system.webServer>
+  <system.webServer>
+    <handlers>
+      <add name="iisnode" path="main.js" verb="*" modules="iisnode" />
+    </handlers>
+    <rewrite>
+      <rules>
+        <rule name="DynamicContent">
+          <match url="/*" />
+          <action type="Rewrite" url="main.js"/>
+        </rule>
+        <rule name="StaticContent" stopProcessing="true">
+          <match url="([\S]+[.](jpg|jpeg|gif|css|png|js|ts|cscc|less|ico|html|map|svg))" />
+          <action type="None" />
+        </rule>
+      </rules>
+    </rewrite>
+    <staticContent>
+      <clientCache cacheControlMode="UseMaxAge" />
+      <remove fileExtension=".svg" />
+      <remove fileExtension=".eot" />
+      <remove fileExtension=".ttf" />
+      <remove fileExtension=".woff" />
+      <remove fileExtension=".woff2" />
+      <remove fileExtension=".otf" />
+      <mimeMap fileExtension=".ttf" mimeType="application/octet-stream" />
+      <mimeMap fileExtension=".svg" mimeType="image/svg+xml"  />
+      <mimeMap fileExtension=".eot" mimeType="application/vnd.ms-fontobject" />
+      <mimeMap fileExtension=".woff" mimeType="application/x-woff" />
+      <mimeMap fileExtension=".woff2" mimeType="application/x-woff" />
+      <mimeMap fileExtension=".otf" mimeType="application/otf" />
+    </staticContent>
+  </system.webServer>
 </configuration>
 ```
+
+With this we need:
+1. Copy **dist** folder to website *root* folder (should be *wwwwroot* or physical path defined at website creation at IIS)
+2. Move **main.js** file from *dist/AngularApp/server* folder to website *root* folder
+3. Guarentee that **web.config** also exists at website *root* folder
 
 # Validation
 There's different tools and websites to validate the performance and best practices of a website
@@ -489,3 +455,4 @@ But browser DevTool as a **Lighthouse** tool (exists also as Chrome extension) t
 * https://github.com/angular/universal/issues/830 (window is not defined)
 * https://danielk.tech/home/angular-and-google-analytics
 * https://developers.google.com/analytics/devguides/collection/gtagjs
+* https://www.thecodehubs.com/how-to-deploy-ssr-angular-universal-to-iis/
