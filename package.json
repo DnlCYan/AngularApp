@@ -11,7 +11,7 @@
     "gh-deploy": "npx gh-pages -d dist/angular-app",
     "gh-build-deploy": "npm run gh-build && npm run gh-deploy",
     "dev:ssr": "ng run AngularApp:serve-ssr",
-    "serve:ssr": "node dist/AngularApp/server/main.js",
+    "serve:ssr": "node dist/AngularApp/server/main.js --ssl",
     "build:ssr": "ng build && ng run AngularApp:server",
     "prerender": "ng run AngularApp:prerender"
   },

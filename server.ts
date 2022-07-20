@@ -65,7 +65,13 @@ function run(): void {
   const certificate = fs.readFileSync('ssl/localhost.crt');
 
   // Start up the Node server
-  const server = https.createServer({ key: privateKey, cert: certificate }, app());
+  let server;
+  if (process.argv && process.argv.includes('--ssl')) {
+    server = https.createServer({ key: privateKey, cert: certificate }, app());
+  } else {
+    server = app();
+  }
+
   server.listen(port, () => {
     console.log(`Node Express server listening on https://localhost:${port}`);
   });

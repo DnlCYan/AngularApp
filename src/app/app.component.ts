@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
   private updateOnlineStatus(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.isOnline = window && window.navigator.onLine;
-      // console.info(`isOnline=[${this.isOnline}]`);
+      console.info(`isOnline=[${this.isOnline}]`);
     }
   }
 
