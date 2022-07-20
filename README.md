@@ -93,6 +93,7 @@ export class ExampleService {
 
 #### 1.2 Domino
 Domino is a Server-side DOM implementation based on Mozilla's dom.js.
+https://www.npmjs.com/package/domino 
 
 ```
 //server.ts
@@ -297,6 +298,49 @@ export class CourseResolver implements Resolve<Course> {
 }
 ```
 
+# Google Analytics
+
+An easy way to add GA to your Angular application is to use [ngx-google-analytics](https://github.com/maxandriani/ngx-google-analytics) library.
+One of the downsizes of this solution it that don't works well with SSR.
+
+So in this case, we must implement our own events to GA.
+Set this scripts at *index.html* where **GA_MEASUREMENT_ID** is your Google Analytics ID for this site.
+```
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){window.dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+```
+
+We're not quite finished because Google Analytics is not notified when we route to a page inside our SPA.
+To fix that, we'll subscribe to the Angular router inside the app.component.ts file and send the new routes to Google Analytics.
+```
+import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+
+declare const gtag: Function;
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  constructor(public router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        gtag('config', 'MEASUREMENT-ID', { 'page_path': event.urlAfterRedirects });
+      }      
+    })
+  }
+}
+```
+
 # Build
 To build PWA application run (default configuration is production):
 `ng build` or `ng build -c production`
@@ -363,3 +407,5 @@ But browser DevTool as a **Lighthouse** tool (exists also as Chrome extension) t
 * https://medium.com/digital-diplomacy/how-to-enable-server-side-rendering-and-pwa-for-your-angular-app-2831b16fa99b
 * https://github.com/angular/universal/blob/main/docs/gotchas.md
 * https://github.com/angular/universal/issues/830 (window is not defined)
+* https://danielk.tech/home/angular-and-google-analytics
+* https://developers.google.com/analytics/devguides/collection/gtagjs
