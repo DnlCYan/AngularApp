@@ -376,10 +376,10 @@ We can use github to deploy our application publicly using  `gh-pages`.
 Previously it's necessary to configure [GitHub Pages](https://docs.github.com/en/pages/quickstart)
 
 In this case, one needs to build with base href using same project name
-`ng build -c production --base-href=/AngularApp/` 
+`ng build -c production --base-href=/AngularApp/ && ng run AngularApp:server` 
 
 And to deploy execute:
-`npx gh-pages -d dist/angular-app`
+`npx gh-pages -d dist/AngularApp`
 
 Then your application will be deployed to https://username.github.io/repository-name/ page. In this case, it deployed to https://dnlcyan.github.io/AngularApp/
 
