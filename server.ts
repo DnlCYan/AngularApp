@@ -60,13 +60,13 @@ export function app(): express.Express {
 function run(): void {
   const port = process.env['PORT'] || 4200;
 
-  // https certificates
-  const privateKey = fs.readFileSync('ssl/localhost.key');
-  const certificate = fs.readFileSync('ssl/localhost.crt');
-
   // Start up the Node server
   let server;
   if (process.argv && process.argv.includes('--ssl')) {
+    // https certificates
+    const privateKey = fs.readFileSync('ssl/localhost.key');
+    const certificate = fs.readFileSync('ssl/localhost.crt');
+
     server = https.createServer({ key: privateKey, cert: certificate }, app());
   } else {
     server = app();

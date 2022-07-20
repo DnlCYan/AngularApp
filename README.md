@@ -351,7 +351,7 @@ To build with SSR execute:
 To run with SSR execute:
 `npm run serve:ssr`
 
-# Deploy
+# Deploy (no SSR)
 This PWA application can be deploy in any different http server.
 Examples:
 * IIS
@@ -376,15 +376,95 @@ We can use github to deploy our application publicly using  `gh-pages`.
 Previously it's necessary to configure [GitHub Pages](https://docs.github.com/en/pages/quickstart)
 
 In this case, one needs to build with base href using same project name
-`ng build -c production --base-href=/AngularApp/ && ng run AngularApp:server` 
+`ng build -c production --base-href=/AngularApp/` 
 
 And to deploy execute:
-`npx gh-pages -d dist/AngularApp`
+`npx gh-pages -d dist/angular-app`
 
 Then your application will be deployed to https://username.github.io/repository-name/ page. In this case, it deployed to https://dnlcyan.github.io/AngularApp/
 
-Note: if ngx gh-pages command throws an error, install gh-pages `npm i -D gh-pages`
+Note 1: if ngx gh-pages command throws an error, install gh-pages `npm i -D gh-pages`
+Note 2: gh-pages only support static websites
 
+# Deploy (with SSR)
+Server Side Rendering website needs to run over a node server, so we need more than a simple http server.
+We can still deploy on IIS, but need to configure a web.config file that uses **iisnode** module.
+```
+<!-- 
+     This configuration file is required if iisnode is used to run node processes behind
+     IIS or IIS Express.  For more information, visit:
+
+     https://github.com/tjanczuk/iisnode/blob/master/src/samples/configuration/web.config
+-->
+
+
+<configuration>
+    <system.webServer>
+        <handlers>
+            <!-- indicates that the app.js file is a node.js application to be handled by the iisnode module -->
+            <add name="iisnode" path="server/server.js" verb="*" modules="iisnode" />
+        </handlers>
+    
+        <rewrite>
+            <rules>
+                <!-- Don't interfere with requests for logs -->
+                <rule name="LogFile" patternSyntax="ECMAScript" stopProcessing="true">
+                    <match url="^[a-zA-Z0-9_\-]+\.js\.logs\/\d+\.txt$" />
+                </rule>
+
+                <!-- Don't interfere with requests for node-inspector debugging -->
+                <rule name="NodeInspector" patternSyntax="ECMAScript" stopProcessing="true">                    
+                    <match url="^server.js\/debug[\/]?" />
+                </rule>
+              
+                <!-- First we consider whether the incoming URL matches a physical file in the /public folder -->
+                <rule name="StaticContent">
+                    <action type="Rewrite" url="public{REQUEST_URI}" />
+                </rule>
+
+                <!-- All other URLs are mapped to the Node.js application entry point -->
+                <rule name="DynamicContent">
+                    <conditions>
+                        <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="True" />
+                    </conditions>
+                    <action type="Rewrite" url="server.js" />
+                </rule>
+            </rules>
+        </rewrite>
+
+        <!-- You can control how Node is hosted within IIS using the following options -->
+        <!--<iisnode      
+          node_env="%node_env%"
+          nodeProcessCommandLine="&quot;%programfiles%\nodejs\node.exe&quot;"
+          nodeProcessCountPerApplication="1"
+          maxConcurrentRequestsPerProcess="1024"
+          maxNamedPipeConnectionRetry="3"
+          namedPipeConnectionRetryDelay="2000"      
+          maxNamedPipeConnectionPoolSize="512"
+          maxNamedPipePooledConnectionAge="30000"
+          asyncCompletionThreadCount="0"
+          initialRequestBufferSize="4096"
+          maxRequestBufferSize="65536"
+          watchedFiles="*.js"
+          uncFileChangesPollingInterval="5000"      
+          gracefulShutdownTimeout="60000"
+          loggingEnabled="true"
+          logDirectoryNameSuffix="logs"
+          debuggingEnabled="true"
+          debuggerPortRange="5058-6058"
+          debuggerPathSegment="debug"
+          maxLogFileSizeInKB="128"
+          appendToExistingLog="false"
+          logFileFlushInterval="5000"
+          devErrorsEnabled="true"
+          flushResponse="false"      
+          enableXFF="false"
+          promoteServerVars=""
+         />-->
+    
+    </system.webServer>
+</configuration>
+```
 
 # Validation
 There's different tools and websites to validate the performance and best practices of a website
