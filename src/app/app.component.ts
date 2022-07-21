@@ -1,8 +1,9 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter, map } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,13 +12,23 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class AppComponent implements OnInit {
 
-  isOnline: boolean;
-  modalVersion: boolean;
+  isOnline: boolean = false;
+  modalVersion: boolean = false;
   modalPwaEvent: any;
   modalPwaPlatform: string | undefined;
-
-  constructor(private platform: Platform,
+  
+  constructor(private ngZone: NgZone, private router: Router,
+    private platform: Platform,
     private swUpdate: SwUpdate, @Inject(PLATFORM_ID) private platformId: any) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          ga('set', 'page', event.urlAfterRedirects);
+          ga('send', 'pageview');
+        }
+      });
+    }
+  
     this.isOnline = false;
     this.modalVersion = false;
   }
