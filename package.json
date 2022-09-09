@@ -13,6 +13,7 @@
     "dev:ssr": "ng run AngularApp:serve-ssr",
     "serve:ssr": "node dist/AngularApp/server/main.js --ssl",
     "build:ssr": "ng build && ng run AngularApp:server",
+    "build:ssr:prod": "ng build -c production && ng run wasteapp:server",
     "prerender": "ng run AngularApp:prerender"
   },
   "private": true,

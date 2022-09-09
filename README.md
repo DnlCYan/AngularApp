@@ -198,6 +198,15 @@ Let's remember, the Google Search Engine will be able to use a client-side rende
 
 In a similar way to what we did with the SEO meta tags, we can also add other tags that will be used by social media crawlers to help configure what the page will look like on social media.
 
+Open Graph (facebook) example:
+```
+    // Twitter metadata
+      this.meta.addTag({property: 'og:title', content: this.course.description});
+      this.meta.addTag({property: 'og:description', content: this.course.description});
+      this.meta.addTag({property: 'og:url', content: 'https://localhost:4200/home'});
+
+```
+
 Twitter example:
 ```
     // Twitter metadata
@@ -431,6 +440,37 @@ With this we need:
 1. Copy **dist** folder to website *root* folder (should be *wwwwroot* or physical path defined at website creation at IIS)
 2. Move **main.js** file from *dist/AngularApp/server* folder to website *root* folder
 3. Guarentee that **web.config** also exists at website *root* folder
+
+## Debug SSR
+To debug an application running `dev:ssr` one can’t just use same debug process as for non-ssr applications.
+For ssr running applications one need to start the command `dev:ssr` with `--inspect` flag
+`ng run wasteapp:serve-ssr –inspect`
+
+This will open a websocket for debugging at **9229** port
+```
+Compiled successfully.
+** Angular Universal Live Development Server is listening on https://localhost:4200, open your browser on https://localhost:4200 **
+Debugger listening on ws://127.0.0.1:9229/437552bd-6519-47b5-af99-969de4638054
+For help, see: https://nodejs.org/en/docs/inspector
+```
+
+So at launch.json file we create a run debug process:
+```
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Debug SSR Server",
+      "port": 9229,
+      "skipFiles": [
+          "<node_internals>/**"
+      ]
+```      
+
+
+Then just start debug with **Debug SSR Server** option.
+
+**Attention**: At Visual Studio Code the debug breakpoints catch `server` execution. To catch `browser` execution, one have to put breakpoints at **main.js** sources inspect at browser DevTools.
+
 
 # Validation
 There's different tools and websites to validate the performance and best practices of a website
